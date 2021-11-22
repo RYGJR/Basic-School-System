@@ -2,78 +2,104 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Registration</title>
-	<link rel="stylesheet"
-		  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-		  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-		  crossorigin="anonymous">
+	<title>SMS Registration</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<style>
+		.page-footer {
+			color: #4A525A;
+			text-align: center;
+			font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+			font-style: normal;
+			font-weight: 500;
+			font-variant: normal;
+			font-size: large;
+		}
+		#loginsubmit {
+		}
+		#login-submit {
+			width: 3in;
+		}
+	</style>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"  ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"  ></script>
 </head>
 <body>
 
-<!-- create navigation bar ( header) -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#" th:href="@{/}">Student Management System</a>
-		</div>
-	</div>
+<!-- create navigation bar ( header)-->
+<nav class="navbar navbar-dark bg-dark">
+	<a class="navbar-brand" href="#">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
+			<path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>
+			<path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>
+		</svg>
+		SCHOOL MANAGEMENT SYSTEM
+	</a>
 </nav>
 
-<br>
-<br>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- Create HTML registration form -->
-<div class="container">
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
 
-			<!-- success message -->
-			<div th:if="${param.success}">
-				<div class="alert alert-info">You've successfully registered
-					to our awesome app!</div>
-			</div>
-
-			<h1>Registration</h1>
-
-			<form th:action="@{/registration}" method="post" th:object="${user}">
-				<div class="form-group">
-					<label class="control-label" for="firstName"> First Name </label>
-					<input id="firstName" class="form-control" th:field="*{firstName}"
-						   required autofocus="autofocus" />
-				</div>
-
-				<div class="form-group">
-					<label class="control-label" for="lastName"> Last Name </label> <input
-						id="lastName" class="form-control" th:field="*{lastName}"
-						required autofocus="autofocus" />
-				</div>
-
-				<div class="form-group">
-					<label class="control-label" for="email"> Email </label> <input
-						id="email" class="form-control" th:field="*{email}" required
-						autofocus="autofocus" />
-				</div>
-
-				<div class="form-group">
-					<label class="control-label" for="password"> Password </label> <input
-						id="password" class="form-control" type="password"
-						th:field="*{password}" required autofocus="autofocus" />
-				</div>
-
-				<div class="form-group">
-					<button type="submit" class="btn btn-success">Register</button>
-					<span>Already registered? <a href="/" th:href="@{/login}">Login
-								here</a></span>
-				</div>
-			</form>
-		</div>
-	</div>
+<!-- success message -->
+<div th:if="${param.success}">
+	<div class="alert alert-info">You've successfully registered!</div>
 </div>
+
+<!-- error message -->
+<div th:if="${param.error}">
+	<div class="alert alert-danger">Credentials is already existing</div>
+</div>
+
+<form th:action="@{/registration}" method="post" th:object="${user}">
+
+	<div class="container py-5 h-100">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+				<div class="card bg-dark text-white" style="border-radius: 1rem;">
+					<div class="card-body p-5">
+
+						<div class="mb-md-5 mt-md-4 pb-5">
+
+							<h2 class="fw-bold mb-2 text-uppercase text-center">Registration</h2>
+
+							<div class="form-group">
+								<label class="control-label" for="firstName"> First Name: </label>
+								<input id="firstName" class="form-control" th:field="*{firstName}"
+									   required autofocus="autofocus" />
+							</div>
+
+							<div class="form-group">
+								<label class="control-label" for="lastName"> Last Name: </label> <input
+									id="lastName" class="form-control" th:field="*{lastName}"
+									required autofocus="autofocus" />
+							</div>
+
+							<div class="form-group">
+								<label class="control-label" for="email"> Email: </label> <input
+									id="email" class="form-control" th:field="*{email}" required
+									autofocus="autofocus" />
+							</div>
+
+							<div class="form-group">
+								<label class="control-label" for="password"> Password: </label> <input
+									id="password" class="form-control" type="password"
+									th:field="*{password}" required autofocus="autofocus" />
+							</div>
+
+							<div class="form-group text-center">
+								<button type="submit" class="btn btn-success btn-primary" id="login-submit">Register</button><br>
+								<span>Already registered? <a href="/" th:href="@{/login}">Login
+												here</a></span>
+							</div>
+						</div>
+						<div class="page-footer">WASHED UP &copy;</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</form>
 </body>
 </html>
