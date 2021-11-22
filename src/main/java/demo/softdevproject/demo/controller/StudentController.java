@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class StudentController {
@@ -20,11 +16,13 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    // display list of students
-    @GetMapping("/")
+    //display list of students
+    @GetMapping("/admin_student")
     public String viewHomePage(Model model) {
         return findPaginated(1, "firstName", "asc", model);
     }
+
+
 
     @GetMapping("/showNewStudentForm")
     public String showNewStudentForm(Model model) {
@@ -34,11 +32,13 @@ public class StudentController {
         return "new_student";
     }
 
+
+
     @PostMapping("/saveStudent")
     public String saveStudent(@ModelAttribute("student") Student student) {
         // save student to database
         studentService.saveStudent(student);
-        return "redirect:/";
+        return "redirect:/admin_student";
     }
 
     @GetMapping("/showFormForUpdate/{id}")
@@ -57,7 +57,7 @@ public class StudentController {
 
         // call delete student method
         this.studentService.deleteStudentById(id);
-        return "redirect:/";
+        return "redirect:/admin_student";
     }
 
 
