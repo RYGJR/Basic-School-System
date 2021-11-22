@@ -1,3 +1,4 @@
+
 package demo.softdevproject.demo.model;
 
 import javax.persistence.Column;
@@ -21,9 +22,21 @@ public class Student {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "section")
+    private String section;
 
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "finalGrade")
+    private String finalGrade;
+
+    @Column(name = "units")
+    private String units;
+
+    @Column(name = "balance")
+    private String balance;
+
     public long getId() {
         return id;
     }
@@ -48,4 +61,35 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getSection() {
+        return section;
+    }
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public String getFinalGrade() {
+        return finalGrade;
+    }
+    public void setFinalGrade(String finalGrade) {
+        this.finalGrade = finalGrade;
+    }
+
+
+    public String getUnits() {
+        return units;
+    }
+    public void setUnits(String units) {
+        this.units = units;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+
 }
