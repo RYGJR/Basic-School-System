@@ -12,4 +12,9 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/new_page")
+    public String newPage(){
+        return "new_page";
+    }
+
 }
