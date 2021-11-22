@@ -50,6 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                //after a succesful login redirect to /new_page
+                .defaultSuccessUrl("/new_page", true)
                 .permitAll()
                 .and()
                 .logout()
