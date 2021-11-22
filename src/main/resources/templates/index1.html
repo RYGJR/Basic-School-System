@@ -1,10 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="ISO-8859-1">
+    <title>Teacher Management System</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
 </head>
 <body>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" th:href="@{/admin_teacher}"><span class="glyphicon glyphicon-education"></span>
+            SCHOOL MANAGEMENT SYSTEM
+        </a>
+        <ul class="nav navbar-nav">
+            <li><a href="#" th:href="@{/admin_student}">Student Management</a></li>
+            <li class="active"><a href="#" th:href="@{/admin_teacher}">Teacher Management</a></li>
+        </ul>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
+<br>
+<br>
+
+<div class="container my-2">
+    <h1>Student Management </h1> <a th:href = "@{/showNewTeacherForm}" class="btn btn-info" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Teacher </a>
+    <hr>
+    <table class="table table-hover table-condensed table-responsive">
+        <thead>
+        <tr class="info">
+            <th>
+                <a th:href="@{'/page/' + ${currentPage1} + '?sortField=firstName&sortDir=' + ${reverseSortDir1}}">
+                    Teacher First Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage1} + '?sortField=lastName&sortDir=' + ${reverseSortDir1}}">
+                    Teacher Last Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage1} + '?sortField=email&sortDir=' + ${reverseSortDir1}}">
+                    Teacher Email</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage1} + '?sortField=salary&sortDir=' + ${reverseSortDir1}}">
+                    Teacher Salary</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage1} + '?sortField=department&sortDir=' + ${reverseSortDir1}}">
+                    Teacher Department</a>
+            </th>
+            <th colspan="2" class="text-center"> Actions </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teacher : ${listTeachers}">
+            <td th:text="${teacher.firstName}"></td>
+            <td th:text="${teacher.lastName}"></td>
+            <td th:text="${teacher.email}"></td>
+            <td th:text="${teacher.salary}"></td>
+            <td th:text="${teacher.department}"></td>
+
+            <td><a th:href="@{/showFormForUpdateTeacher/{id}(id=${teacher.id})}" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Update</a></td>
+            <td><a th:href="@{/deleteTeacher/{id}(id=${teacher.id})}" class="btn btn-danger btn-block"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if = "${totalPages1 > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages1)}">
+						<a th:if="${currentPage1 != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField1} + '&sortDir=' + ${sortDir1}}">[[${i}]]</a>
+						<span th:unless="${currentPage1 != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage1 < totalPages1}" th:href="@{'/page/' + ${currentPage1 + 1}+ '?sortField=' + ${sortField1} + '&sortDir=' + ${sortDir1}}">Next</a>
+                <span th:unless="${currentPage1 < totalPages1}">Next</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage1 < totalPages1}" th:href="@{'/page/' + ${totalPages1}+ '?sortField=' + ${sortField1} + '&sortDir=' + ${sortDir1}}">Last</a>
+                <span th:unless="${currentPage1 < totalPages1}">Last</span>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
