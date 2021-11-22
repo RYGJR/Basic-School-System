@@ -1,10 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
 </head>
+
 <body>
 
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" th:href="@{/teacher_class}"><span class="glyphicon glyphicon-education"></span>
+            SCHOOL MANAGEMENT SYSTEM
+        </a>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#" th:href="@{/teacher_class}">Student Class List</a></li>
+        </ul>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+</nav>
+
+<div class="container my-2">
+    <br>
+    <br>
+    <div class="col-sm-3">
+        <h4><strong>Student Class Master List</strong></h4>
+    </div>
+    <div class="form-group input-group col-sm-3 col-lg-offset-9">
+        <div class="form-group input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input name="query" id="txt_query" placeholder="Search" type="text" class="form-control">
+        </div>
+    </div>
+    <hr>
+    <table id = "table" class="table table-hover table-condensed table-responsive">
+        <thead>
+        <tr class="info">
+            <th>
+                <a th:href="@{'/page/' + ${currentPage2} + '?sortField=firstName&sortDir=' + ${reverseSortDir2}}">
+                    Student First Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage2} + '?sortField=lastName&sortDir=' + ${reverseSortDir2}}">
+                    Student Last Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage2} + '?sortField=section&sortDir=' + ${reverseSortDir2}}">
+                    Student Section</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage2} + '?sortField=email&sortDir=' + ${reverseSortDir2}}">
+                    Student Email</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage2} + '?sortField=prelim&sortDir=' + ${reverseSortDir2}}">
+                    Student Prelim Grade</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage2} + '?sortField=midterm&sortDir=' + ${reverseSortDir2}}">
+                    Student Midterm Grade</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage2} + '?sortField=finals&sortDir=' + ${reverseSortDir2}}">
+                    Student Finals Grade</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage2} + '?sortField=finalGrade&sortDir=' + ${reverseSortDir2}}">
+                    Student Finalized Grade</a>
+            </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="teacherClass : ${listTeacherClass}">
+            <td th:text="${teacherClass.firstName}"></td>
+            <td th:text="${teacherClass.lastName}"></td>
+            <td th:text="${teacherClass.section}"></td>
+            <td th:text="${teacherClass.email}"></td>
+            <td th:text="${teacherClass.prelim}"></td>
+            <td th:text="${teacherClass.midterm}"></td>
+            <td th:text="${teacherClass.finals}"></td>
+            <td th:text="${teacherClass.finalGrade}"></td>
+
+
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if = "${totalPages2 > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages2)}">
+						<a th:if="${currentPage2 != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField2} + '&sortDir=' + ${sortDir2}}">[[${i}]]</a>
+						<span th:unless="${currentPage2 != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage2 < totalPages2}" th:href="@{'/page/' + ${currentPage2 + 1}+ '?sortField=' + ${sortField2} + '&sortDir=' + ${sortDir2}}">Next</a>
+                <span th:unless="${currentPage2 < totalPages2}">Next</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage2 < totalPages2}" th:href="@{'/page/' + ${totalPages2}+ '?sortField=' + ${sortField2} + '&sortDir=' + ${sortDir2}}">Last</a>
+                <span th:unless="${currentPage2 < totalPages2}">Last</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('input#txt_query').quicksearch('table#table tbody tr');
+</script>
 </body>
-</html>
+</html>>
