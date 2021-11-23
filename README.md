@@ -15,7 +15,7 @@ Create a MySQL Database named "sms"
 Under the path /src/main/resources/ change the application.properties MySQL username and password
 
 ## Demo Video
-
+[![Demo](https://img.youtube.com/vi/Andvy5exwcs/0.jpg)](https://www.youtube.com/watch?v=Andvy5exwcs)
 
 ## Group members
 Rolando Gaddi (RYGJR)
